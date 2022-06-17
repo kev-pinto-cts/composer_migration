@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 {%- for table_name in bq_loader_dict.keys() %}
 # Loading Data for Table {{table_name}}
-bq load --source_format=PARQUET --replace {{ dataset}}.{{ table_name }} 'gs://${GCS_BUCKET}/data/{{ staging_folder }}/decrypted/{{ table_name }}/*.parquet'
+bq load --source_format=PARQUET --replace {{ dataset}}.{{ table_name }} gs://${GCS_BUCKET}/data/{{ staging_folder }}/decrypted/{{ table_name }}/*.parquet
 {% endfor %}
+env

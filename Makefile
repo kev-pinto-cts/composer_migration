@@ -1,5 +1,4 @@
-DAG_BUCKET ?= gs://europe-west2-demo-e285b580-bucket
-
+DAG_BUCKET ?= gs://<ur composer dag bucket>
 .PHONY: $(shell sed -n -e '/^$$/ { n ; /^[^ .\#][^ ]*:/ { s/:.*$$// ; p ; } ; }' $(MAKEFILE_LIST))
 
 .DEFAULT_GOAL := help
