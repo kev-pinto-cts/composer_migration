@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+{%- for table_name, file_names in bq_loader_dict.items() %}
+# Creating Staging Folder for Table {{table_name}}
+mkdir -p /home/airflow/gcs/data/{{ staging_folder }}/decrypted/{{ table_name }}
+# Moving Files to Staging Folder for Table {{table_name}}
+{%- for file in file_names %}
+gsutil cp gs://${GCS_BUCKET}/{{ file | replace("/home/airflow/gcs/data","data") }} gs://${GCS_BUCKET}/data/{{ staging_folder }}/decrypted/{{ table_name }}/
+{%- endfor -%}
+{% endfor -%}

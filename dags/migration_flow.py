@@ -1,7 +1,6 @@
 # Standard Imports
 from pathlib import Path
-# from utils.gen_copy_script import gen_copy_script, gen_spark_script
-# from utils.merge_manifests import validate_md5, gen_load_scripts
+from utils.merge_manifests import validate_md5, gen_load_scripts
 from utils.parallel_decrypt_taskgroup import decrypt_hive_files
 
 # Third Party Imports
@@ -44,23 +43,22 @@ def dag_main():
                                  bash_command="scripts/calc_md5.sh",
                                  params={'ROOT_STAGING_FOLDER': ROOT_STAGING_FOLDER})
 
-    # group_files_by_table = BashOperator(task_id='group_files_by_table',
-    #                                     bash_command=f"{scripts_path}/group_files_by_table.sh ")
-    #
-    # setup_bq_dataset = BashOperator(task_id='setup_bq_dataset',
-    #                                 bash_command="scripts/setup_dataset.sh",
-    #                                 params={'ROOT_STAGING_FOLDER': ROOT_STAGING_FOLDER})
-    #
-    # run_spark = BashOperator(task_id='run_spark',
-    #                          bash_command=f"/home/airflow/gcs/data/{ROOT_STAGING_FOLDER}/scripts/hdm_spark.sh ")
+    group_files_by_table = BashOperator(task_id='group_files_by_table',
+                                        bash_command=f"{scripts_path}/group_files_by_table.sh ")
 
-    start >> Label("Create Necessary Folders in Airflow Buckets") >> init >> Label(
-        "Copy Data to Airflow buckets /data Subfolder") >> attach >> \
-    Label("Decrypt in Parallel") >> decrypt_hive_files() >> end_decrypt >> Label("Calculate Md5s") >> calc_file_md5
+    setup_bq_dataset = BashOperator(task_id='setup_bq_dataset',
+                                    bash_command="scripts/setup_dataset.sh",
+                                    params={'dataset': 'demo'})
 
-    # >> Label("Compare Manifest MD5 with Calculated MD5s") >> \
-    # validate_md5(ROOT_STAGING_FOLDER) >> gen_load_scripts(ROOT_STAGING_FOLDER) >> Label("Group Parquet Files 1 Folder Per Table ") >> group_files_by_table >> Label("Create Dataset if Not Already available") >> \
-    # setup_bq_dataset >> gen_spark_script(ROOT_STAGING_FOLDER) >> Label("Run Serveless Spark Load Routine to Load Parquets to BQ")  >> run_spark
+    run_bq_loader = BashOperator(task_id='run_bq_loader',
+                             bash_command=f"/home/airflow/gcs/data/{ROOT_STAGING_FOLDER}/scripts/load_parquets_to_bq.sh ")
+
+    start >> Label("CleanUp and Create Folders in AF") >> init >> Label("Copy to /data in AF") >> attach >> \
+    Label("Decrypt in Parallel") >> decrypt_hive_files() >> end_decrypt >> \
+    Label("Calculate Md5s") >> calc_file_md5 >> Label("Compare MD5s(Prem V/S Cloud") >> \
+    validate_md5(ROOT_STAGING_FOLDER) >> Label("Gen Dynamic Shell Scripts") >> gen_load_scripts(ROOT_STAGING_FOLDER) >> \
+    Label("Group Parquet by Table ") >> group_files_by_table >> Label("Check/Create Dataset") >> \
+    setup_bq_dataset >> Label("Load Data using BQ Utility") >> run_bq_loader
 
 
 # Invoke DAG
