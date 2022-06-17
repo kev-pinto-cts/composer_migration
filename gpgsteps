@@ -1,0 +1,8 @@
+gpg --full-generate-key
+Then Select Options
+1, 4096, 0, y, <Enter Name>, <Email>, <Comment>, O
+
+gpg --output ./pubkey.gpg --armor --export $KEY_ID
+gpg --output ./privkey.gpg --armor --export-secret-keys $KEY_ID
+
+gpg --recipient ${KEYID} --encrypt $filepath
