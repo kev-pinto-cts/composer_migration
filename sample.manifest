@@ -1,0 +1,44 @@
+{
+    "files": [
+        {
+            "file": "part-00000-6b896b98-4efe-4aac-83c1-6c84d9649790-c000.snappy.parquet",
+            "md5sum": "d4adfabba91bb2c2dbaa774ea09bf83d",
+            "cdhPath": "/cdh/hive/table1"
+        },
+        {
+            "file": "part-00001-6b896b98-4efe-4aac-83c1-6c84d9649790-c000.snappy.parquet",
+            "md5sum": "d4adfabba91bb2c2dbaa774ea09bf83d",
+            "cdhPath": "/cdh/hive/table1"
+        },
+        {
+            "file": "part-00002-6b896b98-4efe-4aac-83c1-6c84d9649790-c000.snappy.parquet",
+            "md5sum": "d4adfabba91bb2c2dbaa774ea09bf83d",
+            "cdhPath": "/cdh/hive/table1"
+        },
+        {
+            "file": "part-00003-6b896b98-4efe-4aac-83c1-6c84d9649790-c000.snappy.parquet",
+            "md5sum": "d4adfabba91bb2c2dbaa774ea09bf83d",
+            "cdhPath": "/cdh/hive/table1"
+        },
+        {
+            "file": "part-00000-6b896b98-4efe-4aac-83c1-6c84d9649790-c000.snappy.parquet",
+            "md5sum": "d4adfabba91bb2c2dbaa774ea09bf83d",
+            "cdhPath": "/cdh/hive/table2"
+        },
+        {
+            "file": "part-00001-6b896b98-4efe-4aac-83c1-6c84d9649790-c000.snappy.parquet",
+            "md5sum": "d4adfabba91bb2c2dbaa774ea09bf83d",
+            "cdhPath": "/cdh/hive/table2"
+        },
+        {
+            "file": "part-00000-6b896b98-4efe-4aac-83c1-6c84d9649790-c000.snappy.parquet",
+            "md5sum": "d4adfabba91bb2c2dbaa774ea09bf83d",
+            "cdhPath": "/cdh/hive/table3"
+        },
+        {
+            "file": "part-00001-6b896b98-4efe-4aac-83c1-6c84d9649790-c000.snappy.parquet",
+            "md5sum": "d4adfabba91bb2c2dbaa774ea09bf83d",
+            "cdhPath": "/cdh/hive/table3"
+        }
+    ]
+}
